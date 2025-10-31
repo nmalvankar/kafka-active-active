@@ -1,0 +1,43 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaMirrorMaker2
+metadata:
+  name: cluster-b-mirror-maker-2
+spec:
+  clusters:
+    - alias: cluster-b
+      bootstrapServers: 'cluster-b-kafka-bootstrap-cluster-b.apps.cluster-fqn6x.fqn6x.sandbox915.opentlc.com:443'
+      tls:
+        trustedCertificates:
+          - pattern: '*.crt'
+            secretName: cluster-b-cluster-ca-cert
+    - alias: cluster-a
+      bootstrapServers: 'cluster-a-kafka-bootstrap-cluster-a.apps.cluster-fqn6x.fqn6x.sandbox915.opentlc.com:443'
+      config:
+        config.storage.replication.factor: -1
+        offset.storage.replication.factor: -1
+        status.storage.replication.factor: -1
+      tls:
+        trustedCertificates:
+          - pattern: '*.crt'
+            secretName: cluster-a-cluster-ca-cert
+  connectCluster: cluster-a
+  mirrors:
+    - checkpointConnector:
+        config:
+          checkpoints.topic.replication.factor: -1
+          refresh.groups.interval.seconds: 600
+          sync.group.offsets.enabled: 'false'
+        tasksMax: 1
+      groupsPattern: .*
+      sourceCluster: cluster-b
+      sourceConnector:
+        config:
+          offset-syncs.topic.replication.factor: -1
+          refresh.topics.interval.seconds: 600
+          replication.factor: -1
+          sync.topic.acls.enabled: 'false'
+        tasksMax: 1
+      targetCluster: cluster-a
+      topicsPattern: .*
+  replicas: 1
+  version: 4.0.0
