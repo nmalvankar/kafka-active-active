@@ -6,8 +6,6 @@ We will refer to the two Kafka clusters as `cluster-a` and `cluster-b`.
 
 ---
 
-## Step 1: Install Kafka on both clusters
-
 You must perform these steps on **both** OpenShift clusters. In this example, we will be deploying 2 instances of Kafka in 2 different namespaces on the same OpenShift cluster.
 
 ### 1. Install the Streams for Apache Kafka Operator
