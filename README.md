@@ -1,6 +1,6 @@
-# Kafka for Streams Active-Active Setup with MirrorMaker 2
+# Streams for Apache Kafka Active-Active Setup with MirrorMaker 2
 
-This guide details the process for setting up an active-active, bidirectionally replicated Kafka environment using the Strimzi Kafka Operator and MirrorMaker 2.
+This is a guide for setting up an active-active, bidirectionally replicated Kafka environment using the Streams for Apache Kafka Operator and MirrorMaker 2.
 
 We will refer to the two Kafka clusters as `cluster-a` and `cluster-b`.
 
